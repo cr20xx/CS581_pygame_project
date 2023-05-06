@@ -159,3 +159,29 @@ while running:
             enemyX_change[i] = -4
             enemyY[i] += enemyY_change[i]
 
+        # Collision
+        collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
+        if collision:
+            explosionSound = mixer.Sound("explosion.wav")
+            explosionSound.play()
+            bulletY = 480
+            bullet_state = "ready"
+            score_value += 1
+            enemyX[i] = random.randint(0, 736)
+            enemyY[i] = random.randint(50, 150)
+
+        enemy(enemyX[i], enemyY[i], i)
+
+    # Bullet Movement
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = "ready"
+
+    if bullet_state == "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
+
+    player(playerX, playerY)
+    show_score(textX, testY)
+    pygame.display.update()
+
